@@ -7,10 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<form action="${pageContext.request.contextPath}/addRoom"
+      method="post"
+      enctype="multipart/form-data">
 
-</body>
+    Room Number: <input type="text" name="roomNumber"/><br/>
+    Room Type:
+    <select name="roomType">
+        <option>Single</option>
+        <option>Double</option>
+        <option>Suite</option>
+    </select><br/>
+
+    Price: <input type="number" name="price"/><br/>
+    Amenities: <textarea name="amenities"></textarea><br/>
+    Image: <input type="file" name="image"/><br/>
+
+    <button type="submit">Add Room</button>
+</form>
 </html>
