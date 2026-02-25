@@ -1,34 +1,29 @@
 package org.example.hotel.dao;
 
 
-import org.example.hotel.model.Reservation;
-import org.example.hotel.util.DBConnection;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
+
+
+import org.example.hotel.model.Reservation;
+
+import java.sql.*;
 
 public class ReservationDAO {
 
-    public boolean saveReservation(Reservation r) {
+    public boolean saveReservation(Connection con, Reservation r) throws SQLException {
 
-        String sql = "INSERT INTO reservations (guest_id, room_id, check_in, check_out, total_amount) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservations (reservation_number, guest_id, room_id, check_in, check_out, total_amount) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, r.getGuestId());
-            ps.setInt(2, r.getRoomId());
-            ps.setDate(3, Date.valueOf(r.getCheckIn()));
-            ps.setDate(4, Date.valueOf(r.getCheckOut()));
-            ps.setDouble(5, r.getTotalAmount());
+            ps.setString(1, r.getReservationNumber());
+            ps.setInt(2, r.getGuestId());
+            ps.setInt(3, r.getRoomId());
+            ps.setDate(4, Date.valueOf(r.getCheckIn()));
+            ps.setDate(5, Date.valueOf(r.getCheckOut()));
+            ps.setDouble(6, r.getTotalAmount());
 
             return ps.executeUpdate() > 0;
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        return false;
     }
 }

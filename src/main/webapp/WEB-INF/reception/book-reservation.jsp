@@ -7,10 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<form action="${pageContext.request.contextPath}/reservation"
+      method="post">
 
-</body>
+    <h3>Guest Details</h3>
+    Full Name: <input type="text" name="fullName"/><br/>
+    Address: <input type="text" name="address"/><br/>
+    Contact: <input type="text" name="contact"/><br/>
+    Email: <input type="email" name="email"/><br/>
+
+    <h3>Reservation Details</h3>
+    Room ID: <input type="number" name="roomId"/><br/>
+    Price per Night: <input type="number" name="price"/><br/>
+    Check In: <input type="date" name="checkIn"/><br/>
+    Check Out: <input type="date" name="checkOut"/><br/>
+
+    <button type="submit">Book Reservation</button>
+</form>
 </html>

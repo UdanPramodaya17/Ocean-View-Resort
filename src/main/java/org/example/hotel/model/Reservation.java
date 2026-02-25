@@ -13,6 +13,16 @@ public class Reservation {
     private LocalDate checkOut;
     private double totalAmount;
 
+    private String reservationNumber;
+
+    public String getReservationNumber() {
+        return reservationNumber;
+    }
+
+    public void setReservationNumber(String reservationNumber) {
+        this.reservationNumber = reservationNumber;
+    }
+
     public Reservation() {}
 
     public Reservation(int reservationId, int guestId, int roomId,
