@@ -10,6 +10,7 @@ import org.example.hotel.model.Reservation;
 import org.example.hotel.util.DBConnection;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -29,6 +30,19 @@ public class ReservationService {
         try (Connection con = DBConnection.getConnection()) {
 
             con.setAutoCommit(false); // START TRANSACTION
+
+            // 1️⃣ CHECK DATE CONFLICT
+            boolean conflict = reservationDAO.isRoomBooked(
+                    con,
+                    roomId,
+                    Date.valueOf(checkIn),
+                    Date.valueOf(checkOut)
+            );
+
+            if (conflict) {
+                System.out.println("Room already booked for selected dates!");
+                return false; // STOP BOOKING
+            }
 
             // 1️⃣ Save Guest
             int guestId = guestDAO.saveGuest(con, guest);
@@ -65,4 +79,5 @@ public class ReservationService {
             return false;
         }
     }
+
 }

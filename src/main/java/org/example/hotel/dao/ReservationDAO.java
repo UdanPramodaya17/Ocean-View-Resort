@@ -26,4 +26,32 @@ public class ReservationDAO {
             return ps.executeUpdate() > 0;
         }
     }
+
+
+    public boolean isRoomBooked(Connection con,
+                                int roomId,
+                                Date checkIn,
+                                Date checkOut) throws SQLException {
+
+        String sql = "SELECT COUNT(*) FROM reservations " +
+                "WHERE room_id = ? " +
+                "AND (? < check_out AND ? > check_in)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, roomId);
+            ps.setDate(2, checkIn);
+            ps.setDate(3, checkOut);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // TRUE = Conflict
+            }
+        }
+
+        return false;
+    }
+
+
+
 }

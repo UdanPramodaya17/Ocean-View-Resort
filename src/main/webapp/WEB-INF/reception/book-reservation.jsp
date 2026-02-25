@@ -23,5 +23,11 @@
     Check Out: <input type="date" name="checkOut"/><br/>
 
     <button type="submit">Book Reservation</button>
+
+    <% if(request.getAttribute("error") != null){ %>
+    <p style="color:red;">
+        <%= request.getAttribute("error") %>
+    </p>
+    <% } %>
 </form>
 </html>

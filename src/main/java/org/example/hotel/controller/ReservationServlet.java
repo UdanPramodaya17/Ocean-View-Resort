@@ -36,7 +36,11 @@ public class ReservationServlet extends HttpServlet {
         if (success) {
             response.sendRedirect("jsp/reception/dashboard.jsp?success=1");
         } else {
-            response.getWriter().println("Reservation Failed");
+            request.setAttribute("error",
+                    "Room already booked for selected dates!");
+            request.getRequestDispatcher(
+                    "jsp/reception/book-reservation.jsp"
+            ).forward(request, response);
         }
     }
 }
