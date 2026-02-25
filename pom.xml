@@ -36,6 +36,8 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+
         <!-- BCrypt for password hashing -->
         <dependency>
             <groupId>org.mindrot</groupId>
