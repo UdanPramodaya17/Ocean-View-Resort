@@ -11,6 +11,15 @@
     <title>Title</title>
 </head>
 <body>
-
+<%-- Loop reservations --%>
+<form action="${pageContext.request.contextPath}/checkinout" method="post">
+    <input type="hidden" name="reservationId" value="<%= r.getReservationId() %>"/>
+    <input type="hidden" name="roomId" value="<%= r.getRoomId() %>"/>
+    <% if("BOOKED".equals(r.getStatus())){ %>
+    <button name="action" value="checkin">Check-In</button>
+    <% } else if("CHECKED_IN".equals(r.getStatus())){ %>
+    <button name="action" value="checkout">Check-Out</button>
+    <% } %>
+</form>
 </body>
 </html>

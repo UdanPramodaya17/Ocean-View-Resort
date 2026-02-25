@@ -10,6 +10,7 @@ public class Room {
     private String amenities;
     private String imagePath;
     private String status;
+    private int quantity;
 
     public Room() {}
 
@@ -54,6 +55,7 @@ public class Room {
         return status;
     }
 
+    public int getQuantity() { return quantity; }
     // Setters
     public void setRoomId(int roomId) {
         this.roomId = roomId;
@@ -82,4 +84,6 @@ public class Room {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 }

@@ -4,6 +4,7 @@ package org.example.hotel.dao;
 
 
 import org.example.hotel.model.Guest;
+import org.example.hotel.util.DBConnection;
 
 import java.sql.*;
 
@@ -29,5 +30,27 @@ public class GuestDAO {
         }
 
         return -1;
+    }
+
+    public Guest getGuestById(int guestId) {
+        Guest guest = null;
+        String sql = "SELECT * FROM guests WHERE guest_id=?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, guestId);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                guest = new Guest();
+                guest.setGuestId(rs.getInt("guest_id"));
+                guest.setFullName(rs.getString("full_name"));
+                guest.setAddress(rs.getString("address"));
+                guest.setContactNumber(rs.getString("contact_number"));
+                guest.setEmail(rs.getString("email"));
+            }
+
+        } catch(Exception e){ e.printStackTrace(); }
+        return guest;
     }
 }

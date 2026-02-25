@@ -1,4 +1,6 @@
 package org.example.hotel.controller;
 
-public class DashboardServlet {
+
+public class DashboardServlet  {
+
 }

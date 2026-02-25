@@ -132,5 +132,12 @@ public class RoomDAO {
             return ps.executeUpdate() > 0;
         }
     }
+    // Update room status
+    public boolean checkInRoom(Connection con, int roomId) throws SQLException {
+        return updateRoomStatus(con, roomId, "OCCUPIED");
+    }
 
+    public boolean checkOutRoom(Connection con, int roomId) throws SQLException {
+        return updateRoomStatus(con, roomId, "AVAILABLE");
+    }
 }
