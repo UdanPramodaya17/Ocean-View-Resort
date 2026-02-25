@@ -22,42 +22,42 @@ public class ReservationService {
     private RoomDAO roomDAO = new RoomDAO();
 
     public boolean createReservation(Guest guest,
-                                     int roomId,
+                                     String roomType,
                                      LocalDate checkIn,
                                      LocalDate checkOut,
                                      double pricePerNight) {
 
         try (Connection con = DBConnection.getConnection()) {
+            con.setAutoCommit(false);
 
-            con.setAutoCommit(false); // START TRANSACTION
-
-            // 1️⃣ CHECK DATE CONFLICT
-            boolean conflict = reservationDAO.isRoomBooked(
+            // 1️⃣ Check availability
+            int available = roomDAO.getAvailableRoomsByType(
                     con,
-                    roomId,
-                    Date.valueOf(checkIn),
-                    Date.valueOf(checkOut)
+                    roomType,
+                    java.sql.Date.valueOf(checkIn),
+                    java.sql.Date.valueOf(checkOut)
             );
 
-            if (conflict) {
-                System.out.println("Room already booked for selected dates!");
-                return false; // STOP BOOKING
+
+            if (available <= 0) {
+                System.out.println("No rooms available for selected type and dates!");
+                return false;
             }
 
-            // 1️⃣ Save Guest
+            // 2️⃣ Save Guest
             int guestId = guestDAO.saveGuest(con, guest);
             if (guestId == -1) throw new Exception("Guest Save Failed");
 
-            // 2️⃣ Calculate Bill
+            // 3️⃣ Assign a room_id (pick first available room)
+            int roomId = roomDAO.getFirstAvailableRoomId(con, roomType, checkIn, checkOut);
+
+            // 4️⃣ Calculate Bill
             long nights = ChronoUnit.DAYS.between(checkIn, checkOut);
             double total = nights * pricePerNight;
 
-            // 3️⃣ Generate Reservation Number
-            String reservationNumber = "RES-" + UUID.randomUUID().toString().substring(0,8);
-
-            // 4️⃣ Save Reservation
+            // 5️⃣ Save Reservation
             Reservation reservation = new Reservation();
-            reservation.setReservationNumber(reservationNumber);
+            reservation.setReservationNumber("RES-" + UUID.randomUUID().toString().substring(0,8));
             reservation.setGuestId(guestId);
             reservation.setRoomId(roomId);
             reservation.setCheckIn(checkIn);
@@ -67,11 +67,17 @@ public class ReservationService {
             boolean reservationSaved = reservationDAO.saveReservation(con, reservation);
             if (!reservationSaved) throw new Exception("Reservation Save Failed");
 
-            // 5️⃣ Update Room Status
-            boolean roomUpdated = roomDAO.updateRoomStatus(con, roomId, "OCCUPIED");
-            if (!roomUpdated) throw new Exception("Room Update Failed");
 
-            con.commit(); // SUCCESS
+            // 6️⃣ Update Room Status if all rooms are booked
+            int remaining = roomDAO.getAvailableRoomsByType(
+                    con,
+                    roomType,
+                    java.sql.Date.valueOf(checkIn),
+                    java.sql.Date.valueOf(checkOut)
+            );
+            if (remaining == 0) roomDAO.updateRoomStatus(con, roomId, "FULL");
+
+            con.commit();
             return true;
 
         } catch (Exception e) {

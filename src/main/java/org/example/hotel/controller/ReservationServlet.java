@@ -7,6 +7,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import org.example.hotel.model.Guest;
 import org.example.hotel.service.ReservationService;
+import org.example.hotel.model.Room;
+import org.example.hotel.dao.RoomDAO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,6 +26,22 @@ public class ReservationServlet extends HttpServlet {
         guest.setEmail(request.getParameter("email"));
 
         int roomId = Integer.parseInt(request.getParameter("roomId"));
+        
+        // Get room type from room ID
+        RoomDAO roomDAO = new RoomDAO();
+        Room room = roomDAO.getAllRooms().stream()
+                .filter(r -> r.getRoomId() == roomId)
+                .findFirst()
+                .orElse(null);
+        
+        if (room == null) {
+            request.setAttribute("error", "Invalid room ID!");
+            request.getRequestDispatcher("jsp/reception/book-reservation.jsp")
+                    .forward(request, response);
+            return;
+        }
+        
+        String roomType = room.getRoomType();
         LocalDate checkIn = LocalDate.parse(request.getParameter("checkIn"));
         LocalDate checkOut = LocalDate.parse(request.getParameter("checkOut"));
         double price = Double.parseDouble(request.getParameter("price"));
@@ -31,7 +49,7 @@ public class ReservationServlet extends HttpServlet {
         ReservationService service = new ReservationService();
 
         boolean success = service.createReservation(
-                guest, roomId, checkIn, checkOut, price);
+                guest, roomType, checkIn, checkOut, price);
 
         if (success) {
             response.sendRedirect("jsp/reception/dashboard.jsp?success=1");

@@ -8,6 +8,8 @@ import org.example.hotel.model.Reservation;
 import org.example.hotel.util.DBConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationDAO {
 
@@ -86,6 +88,32 @@ public class ReservationDAO {
 
         } catch(Exception e) { e.printStackTrace(); }
         return r;
+    }
+    public List<Reservation> getAllReservations() {
+        List<Reservation> reservations = new ArrayList<>();
+        String sql = "SELECT * FROM reservations";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Reservation r = new Reservation();
+                r.setReservationId(rs.getInt("reservation_id"));
+                r.setReservationNumber(rs.getString("reservation_number"));
+                r.setGuestId(rs.getInt("guest_id"));
+                r.setRoomId(rs.getInt("room_id"));
+                r.setCheckIn(rs.getDate("check_in").toLocalDate());
+                r.setCheckOut(rs.getDate("check_out").toLocalDate());
+                r.setTotalAmount(rs.getDouble("total_amount"));
+                r.setStatus(rs.getString("status")); // Make sure Reservation model has 'status'
+                reservations.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reservations;
     }
 
 }

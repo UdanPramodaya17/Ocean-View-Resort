@@ -12,6 +12,7 @@ public class Reservation {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private double totalAmount;
+    private String status;
 
     private String reservationNumber;
 
@@ -34,6 +35,7 @@ public class Reservation {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.totalAmount = totalAmount;
+
     }
 
     // Getters
@@ -61,6 +63,10 @@ public class Reservation {
         return totalAmount;
     }
 
+    public String getStatus() { return status; }
+
+
+
     // Setters
     public void setReservationId(int reservationId) {
         this.reservationId = reservationId;
@@ -85,4 +91,6 @@ public class Reservation {
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
+
+    public void setStatus(String status) { this.status = status; }
 }

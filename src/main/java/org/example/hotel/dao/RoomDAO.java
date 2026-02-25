@@ -5,6 +5,7 @@ import org.example.hotel.model.Room;
 import org.example.hotel.util.DBConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,5 +140,58 @@ public class RoomDAO {
 
     public boolean checkOutRoom(Connection con, int roomId) throws SQLException {
         return updateRoomStatus(con, roomId, "AVAILABLE");
+    }
+
+    public int getAvailableRoomsByType(Connection con, String roomType, Date checkIn, Date checkOut) throws SQLException {
+        // Total rooms of this type
+        String sqlTotal = "SELECT quantity FROM rooms WHERE room_type=?";
+        int total = 0;
+
+        try (PreparedStatement ps = con.prepareStatement(sqlTotal)) {
+            ps.setString(1, roomType);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) total = rs.getInt("quantity");
+        }
+
+        // Booked rooms count for selected dates
+        String sqlBooked = "SELECT COUNT(*) AS booked FROM reservations r "
+                + "JOIN rooms ro ON r.room_id = ro.room_id "
+                + "WHERE ro.room_type=? AND (? < r.check_out AND ? > r.check_in)";
+
+        int booked = 0;
+        try (PreparedStatement ps = con.prepareStatement(sqlBooked)) {
+            ps.setString(1, roomType);
+            ps.setDate(2, checkIn);
+            ps.setDate(3, checkOut);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) booked = rs.getInt("booked");
+        }
+
+        return total - booked; // Available rooms
+    }
+
+    public int getFirstAvailableRoomId(Connection con, String roomType, LocalDate checkIn, LocalDate checkOut) throws SQLException {
+        String sql = "SELECT ro.room_id FROM rooms ro " +
+                "WHERE ro.room_type=? AND ro.status!='FULL' " +
+                "ORDER BY ro.room_id ASC LIMIT 1";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, roomType);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt("room_id");
+        }
+        return -1;
+    }
+
+    public String getRoomTypeById(int roomId) {
+        String type = "";
+        String sql = "SELECT room_type FROM rooms WHERE room_id=?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) type = rs.getString("room_type");
+        } catch(Exception e){ e.printStackTrace(); }
+        return type;
     }
 }
