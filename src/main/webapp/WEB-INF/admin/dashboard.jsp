@@ -1,12 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: pramo
-  Date: 2/24/2026
-  Time: 5:27 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<h2>Dashboard</h2>
-<p>Total Rooms: <%= dashboard.getTotalRooms() %></p>
-<p>Available Rooms: <%= dashboard.getAvailableRooms() %></p>
-<p>Total Reservations: <%= dashboard.getTotalReservations() %></p>
+<%@ include file="../common/header.jsp" %>
+<h2>Admin Dashboard</h2>
+<ul>
+    <li><a href="registerReception.jsp">Register Reception User</a></li>
+    <li><a href="reservations.jsp">View Reservations</a></li>
+    <li><a href="addRoom.jsp">Add Room</a></li>
+    <li><a href="allBills.jsp">All Bills</a></li>
+    <li><a href="account.jsp">My Account</a></li>
+</ul>
+<%@ include file="../common/footer.jsp" %>

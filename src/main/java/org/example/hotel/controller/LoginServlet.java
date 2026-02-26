@@ -3,12 +3,13 @@ package org.example.hotel.controller;
 
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.example.hotel.model.User;
 import org.example.hotel.service.AuthService;
 
 import java.io.IOException;
-
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
     private AuthService authService = new AuthService();
@@ -29,18 +30,23 @@ public class LoginServlet extends HttpServlet {
 
             switch (user.getRole()) {
                 case "RECEPTION":
-                    response.sendRedirect("jsp/reception/dashboard.jsp");
+                    request.getRequestDispatcher("/WEB-INF/reception/dashboard.jsp")
+                            .forward(request, response);
                     break;
+
                 case "ADMIN":
-                    response.sendRedirect("jsp/admin/dashboard.jsp");
+                    request.getRequestDispatcher("/WEB-INF/admin/dashboard.jsp")
+                            .forward(request, response);
                     break;
+
                 case "SUPER_ADMIN":
-                    response.sendRedirect("jsp/superadmin/dashboard.jsp");
+                    request.getRequestDispatcher("/WEB-INF/superadmin/dashboard.jsp")
+                            .forward(request, response);
                     break;
             }
         } else {
             request.setAttribute("error", "Invalid Credentials");
-            request.getRequestDispatcher("jsp/auth/login.jsp")
+            request.getRequestDispatcher("/auth/login.jsp")
                     .forward(request, response);
         }
     }

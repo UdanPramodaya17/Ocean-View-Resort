@@ -1,11 +1,12 @@
-package org.example.hotel.service;
-
-
+package org.example.hotel.controller;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.io.IOException;
+import org.example.hotel.service.ReservationService;
 
+import java.io.IOException;
+@WebServlet("/checkinout")
 public class CheckInOutServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

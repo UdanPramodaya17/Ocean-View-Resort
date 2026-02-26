@@ -7,20 +7,37 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static HikariDataSource dataSource;
+    private static final HikariDataSource dataSource;
 
     static {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/hotel_db");
-        config.setUsername("root");
-        config.setPassword("password");
+
+        // 1. Updated JDBC URL for PostgreSQL
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/hotel_DB");
+
+        // 2. Database credentials (update these to match your Postgres setup)
+        config.setUsername("postgres");
+        config.setPassword("Pramodaya17");
+
+        // 3. PostgreSQL Driver Class
+        config.setDriverClassName("org.postgresql.Driver");
+
+        // Connection pool settings
         config.setMaximumPoolSize(10);
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setMinimumIdle(5);
+        config.setIdleTimeout(30000);
+        config.setConnectionTimeout(20000);
 
         dataSource = new HikariDataSource(config);
     }
 
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
+    }
+
+    public static void closePool() {
+        if (dataSource != null) {
+            dataSource.close();
+        }
     }
 }

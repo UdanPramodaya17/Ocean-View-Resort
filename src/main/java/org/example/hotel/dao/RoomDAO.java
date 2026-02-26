@@ -183,15 +183,50 @@ public class RoomDAO {
         return -1;
     }
 
-    public String getRoomTypeById(int roomId) {
-        String type = "";
-        String sql = "SELECT room_type FROM rooms WHERE room_id=?";
+    public Room getRoomById(int roomId) {
+
+        String sql = "SELECT * FROM rooms WHERE room_id = ?";
+
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setInt(1, roomId);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) type = rs.getString("room_type");
-        } catch(Exception e){ e.printStackTrace(); }
-        return type;
+
+            if (rs.next()) {
+                Room room = new Room();
+                room.setRoomId(rs.getInt("room_id"));
+                room.setRoomType(rs.getString("room_type"));
+                room.setPricePerNight(rs.getDouble("price_per_night"));
+                room.setStatus(rs.getString("status"));
+                return room;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String getRoomTypeById(int roomId) {
+
+        String sql = "SELECT room_type FROM rooms WHERE room_id = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, roomId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("room_type");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Unknown";
     }
 }

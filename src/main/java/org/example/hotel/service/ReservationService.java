@@ -200,4 +200,48 @@ public class ReservationService {
             System.err.println("Error during notification: " + e.getMessage());
         }
     }
+
+
+    public boolean checkIn(int reservationId, int roomId) {
+        try (Connection con = DBConnection.getConnection()) {
+            con.setAutoCommit(false);
+
+            boolean resStatus = reservationDAO.updateReservationStatus(
+                    con, reservationId, "CHECKED_IN");
+
+            boolean roomStatus = roomDAO.checkInRoom(con, roomId);
+
+            if (!resStatus || !roomStatus)
+                throw new Exception("Check-In Failed");
+
+            con.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean checkOut(int reservationId, int roomId) {
+        try (Connection con = DBConnection.getConnection()) {
+            con.setAutoCommit(false);
+
+            boolean resStatus = reservationDAO.updateReservationStatus(
+                    con, reservationId, "CHECKED_OUT");
+
+            boolean roomStatus = roomDAO.checkOutRoom(con, roomId);
+
+            if (!resStatus || !roomStatus)
+                throw new Exception("Check-Out Failed");
+
+            con.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
