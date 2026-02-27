@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- Add this --%>
 <%@ include file="../common/header.jsp" %>
 <h2>Available Rooms</h2>
 <table border="1">

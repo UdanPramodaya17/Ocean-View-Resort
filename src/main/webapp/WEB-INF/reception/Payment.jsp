@@ -12,9 +12,8 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/payment" method="post">
-    <input type="hidden" name="reservationId" value="<%= r.getReservationId() %>"/>
-    Amount: <input type="number" name="amount" value="<%= r.getTotalAmount() %>" readonly/><br/>
-    Method:
+    <input type="hidden" name="reservationId" value="${reservation.reservationId}"/>
+    Amount: <input type="number" name="amount" value="${reservation.totalAmount}" readonly/><br/>   Method:
     <select name="method">
         <option>Cash</option>
         <option>Card</option>

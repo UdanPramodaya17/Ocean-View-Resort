@@ -2,10 +2,40 @@
 <%@ include file="../common/header.jsp" %>
 <h2>Reception Dashboard</h2>
 <ul>
-    <li><a href="bookReservation.jsp">Book Reservation</a></li>
-    <li><a href="reservations.jsp">View Reservations</a></li>
-    <li><a href="availableRooms.jsp">Available Rooms</a></li>
-    <li><a href="calculateBill.jsp">Calculate Bill</a></li>
-    <li><a href="account.jsp">My Account</a></li>
+
+    <li>
+        <a href="${pageContext.request.contextPath}/reception/book-page">
+            Book Reservation
+        </a>
+    </li>
+    <li>
+        <a href="${pageContext.request.contextPath}/reception/reservations">
+            View Reservations
+        </a>
+    </li>
+
+    <li>
+
+        <a href="${pageContext.request.contextPath}/reception/available-rooms">
+            Available Rooms
+        </a>
+    </li>
+
+    <li>
+        <a href="${pageContext.request.contextPath}/reception/calculateBill">
+            Calculate Bill
+        </a>
+    </li>
+    <li>
+        <a href="${pageContext.request.contextPath}/reception/calendar.jsp">
+            View Reservation Calendar
+        </a>
+    </li>
+
+    <li>
+        <a href="${pageContext.request.contextPath}/reception/account.jsp">
+            My Account
+        </a>
+    </li>
 </ul>
 <%@ include file="../common/footer.jsp" %>

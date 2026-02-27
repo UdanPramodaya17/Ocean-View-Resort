@@ -115,6 +115,7 @@ public class RoomDAO {
                 room.setAmenities(rs.getString("amenities"));
                 room.setImagePath(rs.getString("image_path"));
                 room.setStatus(rs.getString("status"));
+                room.setQuantity(rs.getInt("quantity"));
                 list.add(room);
             }
 
@@ -124,9 +125,7 @@ public class RoomDAO {
         return list;
     }
     public boolean updateRoomStatus(Connection con, int roomId, String status) throws SQLException {
-
         String sql = "UPDATE rooms SET status=? WHERE room_id=?";
-
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, roomId);
@@ -170,17 +169,43 @@ public class RoomDAO {
         return total - booked; // Available rooms
     }
 
-    public int getFirstAvailableRoomId(Connection con, String roomType, LocalDate checkIn, LocalDate checkOut) throws SQLException {
-        String sql = "SELECT ro.room_id FROM rooms ro " +
+//    public int getFirstAvailableRoomId(Connection con, String roomType, LocalDate checkIn, LocalDate checkOut) throws SQLException {
+//        String sql = "SELECT ro.room_id FROM rooms ro " +
+//                "WHERE ro.room_type=? AND ro.status!='FULL' " +
+//                "ORDER BY ro.room_id ASC LIMIT 1";
+//
+//        try (PreparedStatement ps = con.prepareStatement(sql)) {
+//            ps.setString(1, roomType);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next()) return rs.getInt("room_id");
+//        }
+//        return -1;
+//    }
+
+    public Room getFirstAvailableRoom(String roomType, LocalDate checkIn, LocalDate checkOut) {
+        String sql = "SELECT ro.* FROM rooms ro " +
                 "WHERE ro.room_type=? AND ro.status!='FULL' " +
                 "ORDER BY ro.room_id ASC LIMIT 1";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, roomType);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt("room_id");
+
+            if (rs.next()) {
+                Room room = new Room();
+                room.setRoomId(rs.getInt("room_id"));
+                room.setRoomType(rs.getString("room_type"));
+                room.setPricePerNight(rs.getDouble("price_per_night"));
+                room.setStatus(rs.getString("status"));
+                return room;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return -1;
+        return null;
     }
 
     public Room getRoomById(int roomId) {

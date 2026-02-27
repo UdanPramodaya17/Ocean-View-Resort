@@ -13,8 +13,10 @@ public class Reservation {
     private LocalDate checkOut;
     private double totalAmount;
     private String status;
+    private String roomType;
 
     private String reservationNumber;
+    private String guestName;
 
     public String getReservationNumber() {
         return reservationNumber;
@@ -65,6 +67,9 @@ public class Reservation {
 
     public String getStatus() { return status; }
 
+    public String getGuestName() { return guestName; }
+
+   public  String getRoomType() {return roomType ; }
 
 
     // Setters
@@ -93,4 +98,9 @@ public class Reservation {
     }
 
     public void setStatus(String status) { this.status = status; }
+
+    public void setGuestName(String guestName) { this.guestName = guestName; }
+
+    public void  setRoomType( String roomType) {this.roomType = roomType ; }
+
 }

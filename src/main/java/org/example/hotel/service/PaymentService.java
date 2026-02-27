@@ -65,8 +65,13 @@ public class PaymentService {
     public boolean makePayment(int reservationId, double amount, String method) {
         try {
             // 1️⃣ Create & Save Payment (Logic omitted for brevity)
+            // 1️⃣ Create & Save Payment
             Payment payment = new Payment();
-            // ... set properties
+            payment.setReservationId(reservationId);
+            payment.setAmount(amount);
+            payment.setMethod(method);
+            payment.setPaymentDate(LocalDateTime.now()); // Sets current time
+
             boolean saved = paymentDAO.savePayment(payment);
             if (!saved) return false;
 

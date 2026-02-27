@@ -53,4 +53,37 @@ public class GuestDAO {
         } catch(Exception e){ e.printStackTrace(); }
         return guest;
     }
+
+    public String getGuestNameById(int guestId) {
+        String sql = "SELECT full_name FROM guests WHERE guest_id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, guestId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("full_name");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean updateGuestName(int guestId, String fullName) {
+        String sql = "UPDATE guests SET full_name = ? WHERE guest_id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setInt(2, guestId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
+
