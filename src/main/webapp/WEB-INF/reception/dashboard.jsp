@@ -26,14 +26,15 @@
             Calculate Bill
         </a>
     </li>
-    <li>
-        <a href="${pageContext.request.contextPath}/reception/calendar.jsp">
-            View Reservation Calendar
-        </a>
-    </li>
+<%--    <li>--%>
+<%--        <a href="${pageContext.request.contextPath}/reception/calendar.jsp">--%>
+<%--            View Reservation Calendar--%>
+<%--        </a>--%>
+<%--    </li>--%>
 
     <li>
-        <a href="${pageContext.request.contextPath}/reception/account.jsp">
+        <%-- Change from account.jsp to /reception/profile --%>
+        <a href="${pageContext.request.contextPath}/reception/profile">
             My Account
         </a>
     </li>
