@@ -4,7 +4,9 @@
 <h2>Super Admin Dashboard</h2>
 
 <ul>
-    <li><a href="<%= request.getContextPath() %>/superadmin/register-admin">Register Admin</a></li>
+    <li><a href="<%= request.getContextPath() %>/superadmin/registerAdmin">
+        Register Admin
+    </a></li>
 
     <li><a href="<%= request.getContextPath() %>/admin/registerReception">
         Register Reception User
@@ -22,9 +24,7 @@
         Room List
     </a></li>
 
-    <li><a href="<%= request.getContextPath() %>/admin/allBills">
-        All Bills
-    </a></li>
+    <li><a href="<%= request.getContextPath() %>/superadmin/allBills">All Bills</a></li>
 
     <li><a href="<%= request.getContextPath() %>/account">
         My Account

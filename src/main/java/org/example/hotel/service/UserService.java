@@ -23,5 +23,22 @@ public class UserService {
 
         return userDAO.saveUser(user);
     }
+
+    public boolean registerAdminUser(String username, String password) {
+
+        User existing = userDAO.getUserByUsername(username);
+        if (existing != null) {
+            return false;
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRole("ADMIN");
+        user.setStatus("ACTIVE");
+
+        return userDAO.saveUser(user);
+    }
+
 }
 

@@ -18,6 +18,8 @@ public class Reservation {
     private String reservationNumber;
     private String guestName;
 
+    private String paymentStatus;
+
     public String getReservationNumber() {
         return reservationNumber;
     }
@@ -71,6 +73,10 @@ public class Reservation {
 
    public  String getRoomType() {return roomType ; }
 
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
 
     // Setters
     public void setReservationId(int reservationId) {
@@ -102,5 +108,9 @@ public class Reservation {
     public void setGuestName(String guestName) { this.guestName = guestName; }
 
     public void  setRoomType( String roomType) {this.roomType = roomType ; }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
 }

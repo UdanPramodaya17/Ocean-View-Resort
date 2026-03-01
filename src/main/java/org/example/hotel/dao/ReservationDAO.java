@@ -258,17 +258,45 @@ public class ReservationDAO {
     }
 
     // --- List Methods ---
+//    public List<Reservation> getAllReservations() {
+//        List<Reservation> list = new ArrayList<>();
+//        String sql = "SELECT * FROM reservations ORDER BY reservation_id DESC";
+//        try (Connection con = DBConnection.getConnection();
+//             PreparedStatement ps = con.prepareStatement(sql);
+//             ResultSet rs = ps.executeQuery()) {
+//            while (rs.next()) {
+//                list.add(mapResultSetToReservation(rs));
+//            }
+//        } catch (SQLException e) { e.printStackTrace(); }
+//        return list;
+//    }
+
     public List<Reservation> getAllReservations() {
-        List<Reservation> list = new ArrayList<>();
-        String sql = "SELECT * FROM reservations ORDER BY reservation_id DESC";
+        List<Reservation> reservations = new ArrayList<>();
+        String sql = "SELECT * FROM reservations ORDER BY check_in DESC";
+
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
-                list.add(mapResultSetToReservation(rs));
+                Reservation res = new Reservation();
+                res.setReservationId(rs.getInt("reservation_id"));
+                res.setReservationNumber(rs.getString("reservation_number"));
+                res.setGuestId(rs.getInt("guest_id"));
+                res.setRoomId(rs.getInt("room_id"));
+                res.setCheckIn(rs.getDate("check_in").toLocalDate());
+                res.setCheckOut(rs.getDate("check_out").toLocalDate());
+                res.setTotalAmount(rs.getDouble("total_amount"));
+                res.setPaymentStatus(rs.getString("payment_status"));
+                reservations.add(res);
             }
-        } catch (SQLException e) { e.printStackTrace(); }
-        return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return reservations;
     }
 
     // --- Update Methods ---
