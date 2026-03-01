@@ -1,24 +1,19 @@
 package org.example.hotel.controller;
 
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.example.hotel.service.RoomService;
-
 import java.io.IOException;
 
-@WebServlet("/admin/room-list")   // ✅ ADD THIS
-public class RoomListServlet extends HttpServlet {
+@WebServlet("/superadmin/dashboard")
+public class SuperAdminDashboardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        RoomService service = new RoomService();
-        request.setAttribute("rooms", service.getAllRooms());
-
-        request.getRequestDispatcher("/WEB-INF/admin/room-list.jsp")
+        request.getRequestDispatcher("/WEB-INF/superadmin/dashboard.jsp")
                 .forward(request, response);
     }
 }

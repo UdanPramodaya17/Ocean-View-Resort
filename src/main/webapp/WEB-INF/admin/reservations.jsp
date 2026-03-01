@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../common/header.jsp" %>
+
 <h2>All Reservations</h2>
+
 <table border="1">
     <tr>
         <th>Reservation No</th>
@@ -11,6 +14,7 @@
         <th>Status</th>
         <th>Total</th>
     </tr>
+
     <c:forEach var="res" items="${reservations}">
         <tr>
             <td>${res.reservationNumber}</td>
@@ -23,4 +27,5 @@
         </tr>
     </c:forEach>
 </table>
+
 <%@ include file="../common/footer.jsp" %>

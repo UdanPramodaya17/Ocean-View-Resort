@@ -13,7 +13,7 @@ public class RoomDAO {
 
     // Add Room
     public boolean addRoom(Room room) {
-        String sql = "INSERT INTO rooms (room_number, room_type, price_per_night, amenities, image_path, status) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO rooms (room_number, room_type, price_per_night, amenities, image_path, status,quantity) VALUES (?, ?, ?, ?, ?, ?,?)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -24,6 +24,7 @@ public class RoomDAO {
             ps.setString(4, room.getAmenities());
             ps.setString(5, room.getImagePath());
             ps.setString(6, room.getStatus());
+            ps.setInt(7, room.getQuantity());
 
             return ps.executeUpdate() > 0;
 
@@ -51,6 +52,7 @@ public class RoomDAO {
                 room.setAmenities(rs.getString("amenities"));
                 room.setImagePath(rs.getString("image_path"));
                 room.setStatus(rs.getString("status"));
+                room.setQuantity(rs.getInt("quantity"));
                 list.add(room);
             }
 
@@ -253,5 +255,20 @@ public class RoomDAO {
         }
 
         return "Unknown";
+    }
+
+    public boolean roomNumberExists(String roomNumber) {
+        String sql = "SELECT COUNT(*) FROM rooms WHERE room_number = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, roomNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // True if exists
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -7,6 +7,7 @@ import org.example.hotel.dao.GuestDAO;
 import org.example.hotel.dao.ReservationDAO;
 import org.example.hotel.dao.RoomDAO;
 import org.example.hotel.model.Reservation;
+import org.example.hotel.service.ReservationService;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,4 +78,5 @@ public class ReservationsPageServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
+
 }

@@ -1,16 +1,5 @@
 <%@ page import="org.example.hotel.model.Room" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: pramo
-  Date: 2/25/2026
-  Time: 11:18 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-
-<h2>Room List</h2>
-
+<%@ page import="java.util.List" %>
 <table border="1">
     <tr>
         <th>ID</th>
@@ -18,6 +7,7 @@
         <th>Type</th>
         <th>Price</th>
         <th>Status</th>
+        <th>Quantity</th> <!-- NEW -->
         <th>Image</th>
     </tr>
 
@@ -31,8 +21,8 @@
         <td><%= r.getRoomType() %></td>
         <td><%= r.getPricePerNight() %></td>
         <td><%= r.getStatus() %></td>
+        <td><%= r.getQuantity() %></td> <!-- NEW -->
         <td><img src="<%=request.getContextPath()%>/<%=r.getImagePath()%>" width="100"/></td>
     </tr>
     <% } %>
 </table>
-</html>
