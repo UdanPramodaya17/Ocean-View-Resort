@@ -11,6 +11,10 @@ public class Room {
     private String imagePath;
     private String status;
     private int quantity;
+    private int maxAdults;
+    private int maxChildren;
+    private String description;
+
 
     public Room() {}
 
@@ -56,6 +60,15 @@ public class Room {
     }
 
     public int getQuantity() { return quantity; }
+
+    public int getMaxAdults() { return maxAdults; }
+
+    public int getMaxChildren() { return maxChildren; }
+
+    public String getDescription() { return description; }
+
+
+
     // Setters
     public void setRoomId(int roomId) {
         this.roomId = roomId;
@@ -86,4 +99,13 @@ public class Room {
     }
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public void setMaxAdults(int maxAdults) { this.maxAdults = maxAdults; }
+
+    public void setMaxChildren(int maxChildren) { this.maxChildren = maxChildren; }
+
+    public void setDescription(String description) { this.description = description; }
+
+
+
 }

@@ -1,4 +1,5 @@
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%@ page import="org.example.hotel.dao.RoomDAO" %>
+<%@ page import="java.util.List" %><%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%--<%@ include file="../common/header.jsp" %>--%>
 <%--<h2>Add Room</h2>--%>
 <%--<form action="<%= request.getContextPath() %>/admin/addRoom" method="post" enctype="multipart/form-data">--%>
@@ -35,12 +36,27 @@
                 <label>Room Name <span style="color:red">*</span></label><br>
                 <input type="text" name="roomName" required style="width: 100%; margin-bottom: 15px;">
 
+<%--                <label>Select Room Type <span style="color:red">*</span></label><br>--%>
+<%--                <select name="roomType" required style="width: 100%; margin-bottom: 15px;">--%>
+<%--                    <option value="">Please Select</option>--%>
+<%--                    <option value="single">Single</option>--%>
+<%--                    <option value="double">Double</option>--%>
+<%--                    <option value="deluxe">Deluxe</option>--%>
+<%--                </select>--%>
+
+
                 <label>Select Room Type <span style="color:red">*</span></label><br>
                 <select name="roomType" required style="width: 100%; margin-bottom: 15px;">
                     <option value="">Please Select</option>
-                    <option value="single">Single</option>
-                    <option value="double">Double</option>
-                    <option value="deluxe">Deluxe</option>
+                    <%
+                        RoomDAO dao = new RoomDAO();
+                        List<String> types = dao.getAllRoomTypes();
+                        for(String type : types) {
+                    %>
+                    <option value="<%= type %>"><%= type %></option>
+                    <% } %>
+
+
                 </select>
 
                 <label>Max No. of Child <span style="color:red">*</span></label><br>
@@ -60,11 +76,21 @@
                 <label>Max No. of Adults <span style="color:red">*</span></label><br>
                 <input type="number" name="maxAdults" required style="width: 100%; margin-bottom: 15px;">
 
+<%--                <label>Select Room Facility <span style="color:red">*</span></label><br>--%>
+<%--                <div style="border: 1px solid #ccc; padding: 10px; height: 80px; overflow-y: scroll; margin-bottom: 15px;">--%>
+<%--                    <input type="checkbox" name="facilities" value="WiFi"> Free WiFi<br>--%>
+<%--                    <input type="checkbox" name="facilities" value="Room Service"> Room Service<br>--%>
+<%--                    <input type="checkbox" name="facilities" value="Laundry"> Laundry Service<br>--%>
+<%--                </div>--%>
+
                 <label>Select Room Facility <span style="color:red">*</span></label><br>
                 <div style="border: 1px solid #ccc; padding: 10px; height: 80px; overflow-y: scroll; margin-bottom: 15px;">
-                    <input type="checkbox" name="facilities" value="WiFi"> Free WiFi<br>
-                    <input type="checkbox" name="facilities" value="Room Service"> Room Service<br>
-                    <input type="checkbox" name="facilities" value="Laundry"> Laundry Service<br>
+                    <%
+                        List<String> facilities = dao.getAllFacilityNames();
+                        for(String facility : facilities) {
+                    %>
+                    <input type="checkbox" name="amenities" value="<%= facility %>"> <%= facility %><br>
+                    <% } %>
                 </div>
 
                 <label>Room Image <span style="color:red">*</span></label><br>

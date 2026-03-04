@@ -1,6 +1,6 @@
+
+
 package org.example.hotel.dao;
-
-
 import org.example.hotel.model.Room;
 import org.example.hotel.util.DBConnection;
 
@@ -11,9 +11,32 @@ import java.util.List;
 
 public class RoomDAO {
 
-    // Add Room
+//    // Add Room
+//    public boolean addRoom(Room room) {
+//        String sql = "INSERT INTO rooms (room_number, room_type, price_per_night, amenities, image_path, status,quantity) VALUES (?, ?, ?, ?, ?, ?,?)";
+//
+//        try (Connection con = DBConnection.getConnection();
+//             PreparedStatement ps = con.prepareStatement(sql)) {
+//
+//            ps.setString(1, room.getRoomNumber());
+//            ps.setString(2, room.getRoomType());
+//            ps.setDouble(3, room.getPricePerNight());
+//            ps.setString(4, room.getAmenities());
+//            ps.setString(5, room.getImagePath());
+//            ps.setString(6, room.getStatus());
+//            ps.setInt(7, room.getQuantity());
+//
+//            return ps.executeUpdate() > 0;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
+
     public boolean addRoom(Room room) {
-        String sql = "INSERT INTO rooms (room_number, room_type, price_per_night, amenities, image_path, status,quantity) VALUES (?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO rooms (room_number, room_type, price_per_night, amenities, image_path, status, quantity, max_adults, max_children, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -25,15 +48,16 @@ public class RoomDAO {
             ps.setString(5, room.getImagePath());
             ps.setString(6, room.getStatus());
             ps.setInt(7, room.getQuantity());
+            ps.setInt(8, room.getMaxAdults());
+            ps.setInt(9, room.getMaxChildren());
+            ps.setString(10, room.getDescription());
 
             return ps.executeUpdate() > 0;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-
     // Get All Rooms
     public List<Room> getAllRooms() {
         List<Room> list = new ArrayList<>();
@@ -53,6 +77,9 @@ public class RoomDAO {
                 room.setImagePath(rs.getString("image_path"));
                 room.setStatus(rs.getString("status"));
                 room.setQuantity(rs.getInt("quantity"));
+                room.setMaxAdults(rs.getInt("max_adults"));
+                room.setMaxChildren(rs.getInt("max_children"));
+                room.setDescription(rs.getString("description"));
                 list.add(room);
             }
 
@@ -61,6 +88,35 @@ public class RoomDAO {
         }
         return list;
     }
+
+    // Add these to RoomDAO.java
+
+    public List<String> getAllRoomTypes() {
+        List<String> types = new ArrayList<>();
+        String sql = "SELECT name FROM room_categories";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                types.add(rs.getString("name"));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return types;
+    }
+
+    public List<String> getAllFacilityNames() {
+        List<String> facilities = new ArrayList<>();
+        String sql = "SELECT name FROM facilities";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                facilities.add(rs.getString("name"));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return facilities;
+    }
+
 
     // Update Room
     public boolean updateRoom(Room room) {
@@ -97,6 +153,20 @@ public class RoomDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+
+// Delete Room
+    public String getImagePathByRoomId(int roomId) {
+        String sql = "SELECT image_path FROM rooms WHERE room_id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getString("image_path");
+        } catch (Exception e) { e.printStackTrace(); }
+        return null;
     }
 
     // Get Available Rooms

@@ -1,4 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <div class="form-container" style="max-width: 900px; margin: auto; font-family: sans-serif; padding: 20px; background-color: #f9f9f9;">
+
     <h2 style="color: #888; border-bottom: 1px solid #ddd; padding-bottom: 10px; font-weight: normal;">Room Type Entry Form</h2>
 
     <div style="display: flex; gap: 40px;">
