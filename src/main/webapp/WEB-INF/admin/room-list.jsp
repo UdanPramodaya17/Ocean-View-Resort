@@ -2,7 +2,7 @@
 <%@ page import="org.example.hotel.model.Room" %>
 
 <table border="1" style="width:100%; border-collapse: collapse; text-align: left; font-family: sans-serif;">
-    <thead style="background-color: #5a1212; color: white;">
+    <thead style="background-color:  #1E3C72FF; color: white;">
     <tr>
         <th>Image</th>
         <th>Room Name</th>

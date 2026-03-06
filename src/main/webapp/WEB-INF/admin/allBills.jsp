@@ -35,7 +35,7 @@
                                     ${pay.method}
                             </span>
                         </td>
-                        <td style="padding: 10px; font-weight: bold; color: #28a745;">$${pay.amount}</td>
+                        <td style="padding: 10px; font-weight: bold; color: #28a745;">රු ${pay.amount}</td>
 
                         <td style="padding: 10px;">
                             <a href="${pageContext.request.contextPath}/superadmin/downloadInvoice?resId=${pay.reservationId}"

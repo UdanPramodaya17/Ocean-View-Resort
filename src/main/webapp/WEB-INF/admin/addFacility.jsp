@@ -18,8 +18,8 @@
             <textarea name="facilityDesc" rows="6" required style="width: 100%; padding: 8px; border: 1px solid #ccc;"></textarea>
 
             <div style="margin-top: 30px;">
-                <button type="submit" style="background-color: #5a1212; color: white; border: none; padding: 10px 25px; cursor: pointer; margin-right: 10px;">Save Facility</button>
-                <button type="reset" style="background-color: #5a1212; color: white; border: none; padding: 10px 25px; cursor: pointer;">Reset Form</button>
+                <button type="submit" style="background-color:  #1E3C72FF; color: white; border: none; padding: 10px 25px; cursor: pointer; margin-right: 10px;">Save Facility</button>
+                <button type="reset" style="background-color: #1E3C72FF; color: white; border: none; padding: 10px 25px; cursor: pointer;">Reset Form</button>
             </div>
         </form>
 

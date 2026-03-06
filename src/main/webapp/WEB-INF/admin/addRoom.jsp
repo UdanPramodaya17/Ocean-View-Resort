@@ -99,8 +99,8 @@
         </div>
 
         <div style="margin-top: 20px;">
-            <button type="submit" style="background-color: #5a1212; color: white; border: none; padding: 10px 20px; cursor: pointer;">Save Room</button>
-            <button type="reset" style="background-color: #5a1212; color: white; border: none; padding: 10px 20px; cursor: pointer;">Reset Form</button>
+            <button type="submit" style="background-color:  #1E3C72FF; color: white; border: none; padding: 10px 20px; cursor: pointer;">Save Room</button>
+            <button type="reset" style="background-color:  #1E3C72FF; color: white; border: none; padding: 10px 20px; cursor: pointer;">Reset Form</button>
         </div>
     </form>
 </div>
