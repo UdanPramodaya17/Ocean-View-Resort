@@ -11,6 +11,8 @@ public class Payment {
     private LocalDateTime paymentDate;
     private double amount;
     private String method;
+    private String guestName;
+    private String reservationNumber;
 
     public Payment() {}
 
@@ -22,6 +24,7 @@ public class Payment {
         this.paymentDate = paymentDate;
         this.amount = amount;
         this.method = method;
+
     }
 
     // Getters
@@ -45,6 +48,10 @@ public class Payment {
         return method;
     }
 
+    public String getGuestName() { return guestName; }
+
+    public void setGuestName(String guestName) { this.guestName = guestName; }
+
     // Setters
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
@@ -65,4 +72,8 @@ public class Payment {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    public String getReservationNumber() { return reservationNumber; }
+
+    public void setReservationNumber(String reservationNumber) { this.reservationNumber = reservationNumber; }
 }
