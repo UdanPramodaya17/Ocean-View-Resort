@@ -342,21 +342,82 @@ public class ReservationService {
 //            return false;
 //        }
 //    }
+
+
+
+
+
+
+
+//public boolean createReservation(Guest guest, String roomType, LocalDate checkIn, LocalDate checkOut, double pricePerNight) {
+//    try (Connection con = DBConnection.getConnection()) {
+//        con.setAutoCommit(false);
+//
+//        // 1. Find the first available room of this type
+//        Room room = roomDAO.getFirstAvailableRoom( roomType, checkIn, checkOut);
+//        if (room == null) return false;
+//
+//        // 2. Save Guest
+//        int guestId = guestDAO.saveGuest(con, guest);
+//        if (guestId == -1) throw new Exception("Guest Save Failed");
+//
+//        // 3. Calculate Total
+//        long nights = ChronoUnit.DAYS.between(checkIn, checkOut);
+//        double total = nights * room.getPricePerNight();
+//
+//        // 4. Create Reservation
+//        Reservation res = new Reservation();
+//        res.setReservationNumber("RES-" + UUID.randomUUID().toString().substring(0, 8));
+//        res.setGuestId(guestId);
+//        res.setRoomId(room.getRoomId());
+//        res.setCheckIn(checkIn);
+//        res.setCheckOut(checkOut);
+//        res.setTotalAmount(total);
+//        res.setStatus("CONFIRMED"); // Ensure status is set
+//
+//        boolean saved = reservationDAO.saveReservation(con, res);
+//        if (!saved) throw new Exception("Reservation Table Insert Failed");
+//
+//        con.commit();
+//        handleNotification(guest, res);
+//        return true;
+//
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        return false;
+//    }
+//}
+
+
+
+
 public boolean createReservation(Guest guest, String roomType, LocalDate checkIn, LocalDate checkOut, double pricePerNight) {
     try (Connection con = DBConnection.getConnection()) {
         con.setAutoCommit(false);
 
+        System.out.println("DEBUG: Starting booking process for Room Type: " + roomType);
+
         // 1. Find the first available room of this type
         Room room = roomDAO.getFirstAvailableRoom(roomType, checkIn, checkOut);
-        if (room == null) return false;
+        if (room == null) {
+            System.out.println("DEBUG: FAILED! No room found matching type: " + roomType);
+            return false;
+        }
+        System.out.println("DEBUG: Room found! Room ID: " + room.getRoomId());
 
         // 2. Save Guest
         int guestId = guestDAO.saveGuest(con, guest);
-        if (guestId == -1) throw new Exception("Guest Save Failed");
+        if (guestId == -1) {
+            System.out.println("DEBUG: FAILED! Could not save Guest to database.");
+            con.rollback();
+            return false;
+        }
+        System.out.println("DEBUG: Guest saved successfully! Guest ID: " + guestId);
 
         // 3. Calculate Total
         long nights = ChronoUnit.DAYS.between(checkIn, checkOut);
         double total = nights * room.getPricePerNight();
+        System.out.println("DEBUG: Total amount calculated: $" + total);
 
         // 4. Create Reservation
         Reservation res = new Reservation();
@@ -366,16 +427,25 @@ public boolean createReservation(Guest guest, String roomType, LocalDate checkIn
         res.setCheckIn(checkIn);
         res.setCheckOut(checkOut);
         res.setTotalAmount(total);
-        res.setStatus("CONFIRMED"); // Ensure status is set
+        res.setStatus("CONFIRMED");
 
         boolean saved = reservationDAO.saveReservation(con, res);
-        if (!saved) throw new Exception("Reservation Table Insert Failed");
+        if (!saved) {
+            System.out.println("DEBUG: FAILED! Could not insert Reservation into database.");
+            con.rollback();
+            return false;
+        }
 
+        // If it makes it here, everything worked!
+        System.out.println("DEBUG: SUCCESS! Committing transaction to database.");
         con.commit();
+
+        // Handle Email/PDF
         handleNotification(guest, res);
         return true;
 
     } catch (Exception e) {
+        System.out.println("DEBUG: FAILED WITH EXCEPTION! See details below:");
         e.printStackTrace();
         return false;
     }

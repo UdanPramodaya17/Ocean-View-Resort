@@ -204,6 +204,10 @@ public class RoomDAO {
             return ps.executeUpdate() > 0;
         }
     }
+
+
+
+
     // Update room status
     public boolean checkInRoom(Connection con, int roomId) throws SQLException {
         return updateRoomStatus(con, roomId, "OCCUPIED");
@@ -254,6 +258,23 @@ public class RoomDAO {
 //        return -1;
 //    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Room getFirstAvailableRoom(String roomType, LocalDate checkIn, LocalDate checkOut) {
         String sql = "SELECT ro.* FROM rooms ro " +
                 "WHERE ro.room_type=? AND ro.status!='FULL' " +
@@ -279,6 +300,28 @@ public class RoomDAO {
         }
         return null;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Room getRoomById(int roomId) {
 

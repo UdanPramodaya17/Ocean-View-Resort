@@ -61,7 +61,7 @@ public class EditReservationServlet extends HttpServlet {
             guestDAO.updateGuestName(currentRes.getGuestId(), newGuestName);
 
             // 3. Find a room of the NEW type (or same type)
-            Room room = roomDAO.getFirstAvailableRoom(newRoomType, checkIn, checkOut);
+            Room room = roomDAO.getFirstAvailableRoom( newRoomType, checkIn, checkOut);
 
             if (room != null) {
                 // 4. Update Reservation with NEW room and dates
