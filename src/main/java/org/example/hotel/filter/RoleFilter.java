@@ -173,6 +173,13 @@ public class RoleFilter implements Filter {
 
         // Role-based authorization
         boolean allowed = false;
+
+        // ✅ 1. Allow any logged-in user to hit the logout route
+        if (path.equals("/logout")) {
+            allowed = true;
+        }
+
+
         if (path.startsWith("/admin/") && (role.equals("ADMIN") || role.equals("SUPER_ADMIN"))) allowed = true;
         if (path.startsWith("/reception/") && (role.equals("RECEPTION") || role.equals("ADMIN") || role.equals("SUPER_ADMIN"))) allowed = true;
         if (path.startsWith("/superadmin/") && role.equals("SUPER_ADMIN")) allowed = true;

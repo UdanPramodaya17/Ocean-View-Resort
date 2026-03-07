@@ -197,6 +197,16 @@
             <strong>Authentication Failed:</strong> ${error}
         </div>
     </c:if>
+
+    <%-- Check for the logout message in the URL --%>
+    <%
+        String message = request.getParameter("message");
+        if ("LoggedOut".equals(message)) {
+    %>
+    <div style="color: #155724; background-color: #d4edda; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+        You have been successfully logged out.
+    </div>
+    <% } %>
 </div>
 
 </body>
