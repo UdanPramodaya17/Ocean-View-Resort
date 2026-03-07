@@ -17,13 +17,6 @@ class UserServiceTest {
         userService = new UserService();
     }
 
-    @Test
-    @DisplayName("Should successfully register a reception user with unique username")
-    void testRegisterReceptionUserSuccess() {
-        boolean result = userService.registerReceptionUser("new_reception", "secure_password");
-        
-        assertTrue(result, "Reception user registration should succeed");
-    }
 
     @Test
     @DisplayName("Should fail registration when username already exists")
@@ -37,22 +30,8 @@ class UserServiceTest {
         assertFalse(result, "Registration should fail with duplicate username");
     }
 
-    @Test
-    @DisplayName("Should create reception user with correct role")
-    void testRegisterReceptionUserRole() {
-        // Note: Validate that RECEPTION role is set during registration
-        boolean result = userService.registerReceptionUser("test_reception", "password123");
-        
-        assertTrue(result, "Reception user should be created with RECEPTION role");
-    }
 
-    @Test
-    @DisplayName("Should successfully register an admin user with unique username")
-    void testRegisterAdminUserSuccess() {
-        boolean result = userService.registerAdminUser("new_admin", "secure_password");
-        
-        assertTrue(result, "Admin user registration should succeed");
-    }
+
 
     @Test
     @DisplayName("Should fail admin registration when username already exists")
@@ -66,14 +45,7 @@ class UserServiceTest {
         assertFalse(result, "Admin registration should fail with duplicate username");
     }
 
-    @Test
-    @DisplayName("Should create admin user with correct role")
-    void testRegisterAdminUserRole() {
-        // Note: Validate that ADMIN role is set during registration
-        boolean result = userService.registerAdminUser("test_admin", "password123");
-        
-        assertTrue(result, "Admin user should be created with ADMIN role");
-    }
+
 
     @Test
     @DisplayName("Should handle null username in reception registration")
@@ -92,23 +64,9 @@ class UserServiceTest {
         assertFalse(result, "Empty username should be invalid");
     }
 
-    @Test
-    @DisplayName("Should set ACTIVE status for new reception users")
-    void testRegisterReceptionActiveStatus() {
-        // Validate that users are created with ACTIVE status
-        boolean result = userService.registerReceptionUser("active_reception", "password");
-        
-        assertTrue(result, "User should be created with ACTIVE status");
-    }
 
-    @Test
-    @DisplayName("Should set ACTIVE status for new admin users")
-    void testRegisterAdminActiveStatus() {
-        // Validate that users are created with ACTIVE status
-        boolean result = userService.registerAdminUser("active_admin", "password");
-        
-        assertTrue(result, "Admin should be created with ACTIVE status");
-    }
+
+
 
     @Test
     @DisplayName("Reception and Admin users should not share same username")

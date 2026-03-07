@@ -34,9 +34,14 @@
         <td>$<%= String.format("%.2f", room.getPricePerNight()) %></td>
         <td><%= room.getMaxAdults() %> Adults / <%= room.getMaxChildren() %> Children</td>
         <td style="font-size: 0.9em; color: #555;"><%= room.getAmenities() %></td>
+<%--        <td>--%>
+<%--                <span style="padding: 2px 8px; border-radius: 10px; color: white; background-color: <%= room.getStatus().equals("AVAILABLE") ? "#28a745" : "#dc3545" %>;">--%>
+<%--                    <%= room.getStatus() %>--%>
+<%--                </span>--%>
+<%--        </td>--%>
         <td>
-                <span style="padding: 2px 8px; border-radius: 10px; color: white; background-color: <%= room.getStatus().equals("AVAILABLE") ? "#28a745" : "#dc3545" %>;">
-                    <%= room.getStatus() %>
+                <span style="padding: 2px 8px; border-radius: 10px; color: white; background-color: <%= "AVAILABLE".equals(room.getStatus()) ? "#28a745" : "#dc3545" %>;">
+                    <%= room.getStatus() != null ? room.getStatus() : "UNKNOWN" %>
                 </span>
         </td>
         <td>
