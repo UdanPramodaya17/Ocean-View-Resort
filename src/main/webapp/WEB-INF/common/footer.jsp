@@ -18,8 +18,34 @@
         letter-spacing: 0.5px;
         opacity: 0.9; /* Softens the white text slightly so it isn't harsh */
     }
+
+
+
+
 </style>
 
 <footer class="site-footer">
     <p>&copy; 2026 Ocean View Resort | Hotel Management System</p>
+
+    <script>
+        function confirmCheckIn(element) {
+            if (confirm("Are you sure you want to Check-In this guest? This will mark the room as occupied.")) {
+                element.style.pointerEvents = 'none';
+                element.innerText = 'Processing...';
+                element.style.backgroundColor = '#95a5a6';
+                return true;
+            }
+            return false;
+        }
+
+        function confirmCheckOut(element) {
+            if (confirm("Are you sure you want to Check-Out this guest? This will finalize the stay and release the room.")) {
+                element.style.pointerEvents = 'none';
+                element.innerText = 'Finishing...';
+                element.style.backgroundColor = '#95a5a6';
+                return true;
+            }
+            return false;
+        }
+    </script>
 </footer>

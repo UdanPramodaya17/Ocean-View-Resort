@@ -505,38 +505,88 @@ public boolean createReservation(Guest guest, String roomType, LocalDate checkIn
 //        }
 //    }
 
+//    public boolean checkIn(int reservationId, int roomId) {
+//        try (Connection con = DBConnection.getConnection()) {
+//            con.setAutoCommit(false);
+//
+//            boolean resStatus = reservationDAO.updateReservationStatus(con, reservationId, "CHECKED_IN");
+//            boolean roomStatus = roomDAO.checkInRoom(con, roomId);
+//
+//            System.out.println("Debug - Res Update: " + resStatus + " | Room Update: " + roomStatus);
+//
+//            if (!resStatus || !roomStatus) {
+//                con.rollback(); // Undo everything if one fails
+//                return false;
+//            }
+//
+//            con.commit(); // Only saves if BOTH are successful
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+//    public boolean checkOut(int reservationId, int roomId) {
+//        try (Connection con = DBConnection.getConnection()) {
+//            con.setAutoCommit(false);
+//
+//            boolean resStatus = reservationDAO.updateReservationStatus(
+//                    con, reservationId, "CHECKED_OUT");
+//
+//            boolean roomStatus = roomDAO.checkOutRoom(con, roomId);
+//
+//            if (!resStatus || !roomStatus)
+//                throw new Exception("Check-Out Failed");
+//
+//            con.commit();
+//            return true;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+
     public boolean checkIn(int reservationId, int roomId) {
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
 
+            // 1. Mark reservation as CHECKED_IN
             boolean resStatus = reservationDAO.updateReservationStatus(con, reservationId, "CHECKED_IN");
-            boolean roomStatus = roomDAO.checkInRoom(con, roomId);
 
-            System.out.println("Debug - Res Update: " + resStatus + " | Room Update: " + roomStatus);
+            // 2. Mark the physical room as OCCUPIED (Ethical Lock)
+            // Note: Ensure your RoomDAO has a method like updateRoomStatus(Connection, int, String)
+            boolean roomStatus = roomDAO.updateRoomStatus(con, roomId, "OCCUPIED");
 
             if (!resStatus || !roomStatus) {
-                con.rollback(); // Undo everything if one fails
+                con.rollback(); // Cancel everything if one part fails
+                System.out.println("DEBUG: Check-In failed. Transaction rolled back.");
                 return false;
             }
 
-            con.commit(); // Only saves if BOTH are successful
+            con.commit();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
     public boolean checkOut(int reservationId, int roomId) {
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
 
-            boolean resStatus = reservationDAO.updateReservationStatus(
-                    con, reservationId, "CHECKED_OUT");
+            // 1. Mark reservation as CHECKED_OUT
+            boolean resStatus = reservationDAO.updateReservationStatus(con, reservationId, "CHECKED_OUT");
 
-            boolean roomStatus = roomDAO.checkOutRoom(con, roomId);
+            // 2. Mark the physical room as AVAILABLE (Release for new guests)
+            boolean roomStatus = roomDAO.updateRoomStatus(con, roomId, "AVAILABLE");
 
-            if (!resStatus || !roomStatus)
-                throw new Exception("Check-Out Failed");
+            if (!resStatus || !roomStatus) {
+                con.rollback();
+                System.out.println("DEBUG: Check-Out failed. Transaction rolled back.");
+                return false;
+            }
 
             con.commit();
             return true;
@@ -546,4 +596,7 @@ public boolean createReservation(Guest guest, String roomType, LocalDate checkIn
             return false;
         }
     }
+
+
+
 }

@@ -104,47 +104,6 @@ import java.io.IOException;
 @WebFilter("/*") // Apply to all URLs
 public class RoleFilter implements Filter {
 
-//    @Override
-//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-//            throws IOException, ServletException {
-//
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-//        String path = req.getRequestURI().substring(req.getContextPath().length());
-//
-//        // 1. PUBLIC PATHS: Allow access to login, assets, and the login servlet
-//        if (path.startsWith("/login") || path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-//
-//        // 2. AUTHENTICATION CHECK
-//        HttpSession session = req.getSession(false);
-//        String userRole = (session != null) ? (String) session.getAttribute("role") : null;
-//
-//        if (userRole == null) {
-//            res.sendRedirect(req.getContextPath() + "/login-page");
-//            return;
-//        }
-//
-//        // 3. ROLE-BASED AUTHORIZATION (The "Gatekeeper" Logic)
-//        boolean authorized = false;
-//
-//        if (path.startsWith("/reception/") && (userRole.equals("RECEPTION") || userRole.equals("ADMIN") || userRole.equals("SUPER_ADMIN"))) {
-//            authorized = true;
-//        } else if (path.startsWith("/admin/") && (userRole.equals("ADMIN") || userRole.equals("SUPER_ADMIN"))) {
-//            authorized = true;
-//        } else if (path.startsWith("/superadmin/") && userRole.equals("SUPER_ADMIN")) {
-//            authorized = true;
-//        }
-//
-//        if (authorized) {
-//            chain.doFilter(request, response); // User has the right role, let them in!
-//        } else {
-//            // User is logged in but trying to access a page they aren't allowed to see
-//            res.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
-//        }
-//    }
 
 
     @Override
@@ -156,12 +115,22 @@ public class RoleFilter implements Filter {
 
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        // Allow login page & static assets
-        if (path.startsWith("/login") || path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")) {
+        // ✅ 1. ADD NEW PUBLIC PATHS HERE
+        // We add /home, /about, /contact, and /help to the list of allowed paths
+        if (path.equals("/") ||
+                path.equals("/index.jsp") ||
+                path.startsWith("/home") ||
+                path.startsWith("/about") ||
+                path.startsWith("/contact") ||
+                path.startsWith("/help") ||
+                path.startsWith("/login") ||
+                path.startsWith("/css/") ||
+                path.startsWith("/js/") ||
+                path.startsWith("/images/")) {
+
             chain.doFilter(request, response);
             return;
         }
-
         // Check session
         HttpSession session = req.getSession(false);
         String role = (session != null) ? (String) session.getAttribute("role") : null;
@@ -182,7 +151,22 @@ public class RoleFilter implements Filter {
 
         if (path.startsWith("/admin/") && (role.equals("ADMIN") || role.equals("SUPER_ADMIN"))) allowed = true;
         if (path.startsWith("/reception/") && (role.equals("RECEPTION") || role.equals("ADMIN") || role.equals("SUPER_ADMIN"))) allowed = true;
-        if (path.startsWith("/superadmin/") && role.equals("SUPER_ADMIN")) allowed = true;
+        if (path.startsWith("/admin/") && (role.equals("ADMIN") || role.equals("SUPER_ADMIN") || role.equals("RECEPTION"))) {
+            allowed = true;
+        }
+
+        // ✅ 4. Updated SuperAdmin path: Allow ADMINs to access this too if needed
+        // (especially for the downloadInvoice servlet)
+        if (path.startsWith("/superadmin/") && (role.equals("SUPER_ADMIN") || role.equals("ADMIN"))) {
+            allowed = true;
+        }
+
+
+        // Inside RoleFilter.java
+        if (path.equals("/help") || path.equals("/submit-message") || path.startsWith("/css/")) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         if (allowed) {
             chain.doFilter(request, response);

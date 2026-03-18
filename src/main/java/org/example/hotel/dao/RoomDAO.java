@@ -196,8 +196,17 @@ public class RoomDAO {
         }
         return list;
     }
+//    public boolean updateRoomStatus(Connection con, int roomId, String status) throws SQLException {
+//        String sql = "UPDATE rooms SET status=? WHERE room_id=?";
+//        try (PreparedStatement ps = con.prepareStatement(sql)) {
+//            ps.setString(1, status);
+//            ps.setInt(2, roomId);
+//            return ps.executeUpdate() > 0;
+//        }
+//    }
+
     public boolean updateRoomStatus(Connection con, int roomId, String status) throws SQLException {
-        String sql = "UPDATE rooms SET status=? WHERE room_id=?";
+        String sql = "UPDATE rooms SET status = ? WHERE room_id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, roomId);
@@ -385,3 +394,4 @@ public class RoomDAO {
         return false;
     }
 }
+

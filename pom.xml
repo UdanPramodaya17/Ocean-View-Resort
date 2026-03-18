@@ -68,16 +68,24 @@
             <version>2.10.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-        </dependency>
 
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
         <!-- JSTL -->
@@ -86,6 +94,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
     </dependencies>
 
 

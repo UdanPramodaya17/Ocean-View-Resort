@@ -289,7 +289,9 @@ public class ReservationDAO {
                 res.setCheckOut(rs.getDate("check_out").toLocalDate());
                 res.setTotalAmount(rs.getDouble("total_amount"));
                 res.setPaymentStatus(rs.getString("payment_status"));
+                res.setStatus(rs.getString("status"));
                 reservations.add(res);
+
             }
 
         } catch (Exception e) {

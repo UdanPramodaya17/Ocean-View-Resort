@@ -38,7 +38,7 @@
                         <td style="padding: 10px; font-weight: bold; color: #28a745;">රු ${pay.amount}</td>
 
                         <td style="padding: 10px;">
-                            <a href="${pageContext.request.contextPath}/superadmin/downloadInvoice?resId=${pay.reservationId}"
+                            <a href="${pageContext.request.contextPath}/admin/downloadInvoice?resId=${pay.reservationId}"
                                style="background-color: #17a2b8; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-size: 13px;">
                                 Download PDF
                             </a>

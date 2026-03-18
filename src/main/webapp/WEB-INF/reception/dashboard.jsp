@@ -107,6 +107,9 @@
         /* Adds a subtle fade to the emoji icons */
         opacity: 0.9;
     }
+
+    /* Add this to your existing styles for the message section title */
+
 </style>
 
 <div class="dashboard-container">
@@ -140,6 +143,9 @@
                 Calculate Bill
             </a>
         </li>
+
+
+
 
         <%-- I formatted your commented-out code so it matches the new style when you are ready to uncomment it --%>
         <%--
