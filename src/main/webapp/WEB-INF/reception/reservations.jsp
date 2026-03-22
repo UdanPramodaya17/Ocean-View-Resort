@@ -378,12 +378,39 @@
         cursor: not-allowed !important;
         opacity: 0.7;
     }
+
+    .btn-dashboard {
+        text-decoration: none;
+        background-color: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background-color 0.3s, transform 0.1s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-dashboard:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-dashboard:active {
+        transform: scale(0.98);
+    }
 </style>
 
 <div class="table-container">
-    <div class="page-header">
-        <h2 class="page-title">All Reservations</h2>
-    </div>
+    <div class="table-container">
+        <div class="page-header">
+            <h2 class="page-title">All Reservations</h2>
+
+            <a href="${pageContext.request.contextPath}/reception/dashboard" class="btn-dashboard">
+                <span>&larr;</span> Back to Dashboard
+            </a>
+        </div>
 
     <div class="table-wrapper">
         <table class="data-table">

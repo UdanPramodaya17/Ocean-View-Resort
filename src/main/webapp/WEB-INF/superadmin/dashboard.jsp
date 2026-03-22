@@ -139,6 +139,14 @@
             </a>
         </li>
 
+        <%-- ✅ ADDED THE MESSAGES LINK HERE --%>
+        <li class="dashboard-card">
+            <a href="<%= request.getContextPath() %>/superadmin/messages">
+                <span class="card-icon">✉️</span>
+                View Messages
+            </a>
+        </li>
+
         <li class="dashboard-card">
             <a href="<%= request.getContextPath() %>/superadmin/allBills">
                 <span class="card-icon">🧾</span>
@@ -146,12 +154,8 @@
             </a>
         </li>
 
-        <li class="dashboard-card">
-            <a href="<%= request.getContextPath() %>/account">
-                <span class="card-icon">👤</span>
-                My Account
-            </a>
-        </li>
+
+
     </ul>
 </div>
 

@@ -30,7 +30,14 @@
 <div style="max-width: 1200px; margin: 20px auto; padding: 20px; font-family: sans-serif;">
 
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ccc; padding-bottom: 15px; margin-bottom: 30px;">
-        <h2 style="color: #333; margin: 0;">Room Book Reservation</h2>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <h2 style="color: #333; margin: 0;">Room Book Reservation</h2>
+
+            <a href="${pageContext.request.contextPath}/reception/dashboard"
+               style="text-decoration: none; background-color: #6c757d; color: white; padding: 8px 15px; border-radius: 4px; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+                <span>&larr;</span> Dashboard
+            </a>
+        </div>
 
         <div style="display: flex; align-items: center; gap: 10px;">
             <label style="font-size: 16px; color: #555;">Search room name</label>
@@ -58,14 +65,14 @@
                         </div>
 
                         <div style="padding: 15px;">
-                            <h3 class="room-title" style="margin: 0 0 10px 0; color: #5a1212;">${room.roomType} - Room ${room.roomNumber}</h3>
+                            <h3 class="room-title" style="margin: 0 0 10px 0; color: #1e3c72;">${room.roomType} - Room ${room.roomNumber}</h3>
                             <p style="margin: 5px 0; color: #666; font-size: 14px;"><strong>Price:</strong> $${room.pricePerNight} / night</p>
                             <p style="margin: 5px 0; color: #666; font-size: 14px;"><strong>Capacity:</strong> ${room.maxAdults} Adults, ${room.maxChildren} Children</p>
                             <p style="margin: 5px 0; color: #666; font-size: 14px; height: 40px; overflow: hidden;"><strong>Amenities:</strong> ${room.amenities}</p>
 
                             <div style="margin-top: 20px; text-align: right;">
                                 <a href="${pageContext.request.contextPath}/reception/book-page?roomId=${room.roomId}&roomType=${room.roomType}"
-                                   style="display: inline-block; background-color: #5a1212; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                                   style="display: inline-block; background-color: #1E3C72FF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
                                     Book Room
                                 </a>
                             </div>

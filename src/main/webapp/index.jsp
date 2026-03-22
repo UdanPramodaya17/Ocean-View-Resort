@@ -24,7 +24,7 @@
 
         header h1 {
             margin: 0;
-            color: #5a1212; /* Your theme red */
+            color: #1E3C72FF; /* Your theme red */
             font-size: 32px;
             letter-spacing: 2px;
         }
@@ -35,6 +35,7 @@
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: center;
+            background-color: #ffffff;
         }
 
         nav a {
@@ -51,7 +52,7 @@
         nav a:last-child { border-right: none; }
 
         nav a:hover {
-            background-color: #5a1212;
+            background-color: #1E3C72FF;
             color: white;
         }
 
@@ -120,6 +121,8 @@
 <div class="welcome-text">
     <h2>Experience the Ultimate Luxury</h2>
     <p>Welcome to Ocean View Resort, where the sky meets the sea.</p>
+    <h2>Contact Us ,Booking & Reservations</h2>
+    <h1> +94 763240577</h1>
 </div>
 
 </body>

@@ -1,21 +1,3 @@
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<%@ include file="../common/header.jsp" %>--%>
-<%--<h2>Register Admin User</h2>--%>
-<%--<form action="<%= request.getContextPath() %>/superadmin/registerAdmin" method="post">--%>
-<%--    <label>Full Name:</label>--%>
-<%--    <input type="text" name="fullName" required><br>--%>
-<%--    <label>Username:</label>--%>
-<%--    <input type="text" name="username" required><br>--%>
-<%--    <label>Password:</label>--%>
-<%--    <input type="password" name="password" required><br>--%>
-<%--    <label>Email:</label>--%>
-<%--    <input type="email" name="email"><br>--%>
-<%--    <button type="submit">Register</button>--%>
-<%--</form>--%>
-<%--<%@ include file="../common/footer.jsp" %>--%>
-
-
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/header.jsp" %>
 
@@ -26,7 +8,6 @@
         padding: 0 20px;
         font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
-
     .card {
         background-color: #ffffff;
         border-radius: 12px;
@@ -34,7 +15,6 @@
         border: 1px solid #eaeaea;
         padding: 40px;
     }
-
     .page-title {
         color: #1e3c72;
         font-size: 26px;
@@ -42,28 +22,23 @@
         text-align: center;
         margin-bottom: 8px;
     }
-
     .page-subtitle {
         text-align: center;
         color: #666;
         font-size: 14px;
         margin-bottom: 30px;
     }
-
-    /* Form Styles */
     .form-group {
         margin-bottom: 20px;
         display: flex;
         flex-direction: column;
     }
-
     .form-group label {
         font-size: 14px;
         font-weight: 500;
         color: #444;
         margin-bottom: 8px;
     }
-
     .form-group input {
         padding: 12px 15px;
         border: 1px solid #ccc;
@@ -71,13 +46,11 @@
         font-size: 15px;
         transition: border-color 0.3s, box-shadow 0.3s;
     }
-
     .form-group input:focus {
         outline: none;
         border-color: #1e3c72;
         box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
     }
-
     .btn-submit {
         width: 100%;
         padding: 14px;
@@ -91,13 +64,24 @@
         transition: background-color 0.3s, transform 0.1s;
         margin-top: 10px;
     }
-
-    .btn-submit:hover {
-        background-color: #162c55;
+    .btn-submit:hover { background-color: #162c55; }
+    .btn-submit:active { transform: scale(0.98); }
+    .alert {
+        padding: 12px 15px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 25px;
     }
-
-    .btn-submit:active {
-        transform: scale(0.98);
+    .alert-success {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #c8e6c9;
+    }
+    .alert-error {
+        background-color: #ffebee;
+        color: #c62828;
+        border: 1px solid #ffcdd2;
     }
 </style>
 
@@ -105,6 +89,18 @@
     <div class="card">
         <h2 class="page-title">Register Admin User</h2>
         <p class="page-subtitle">Create a new system administrator account</p>
+
+        <% if (request.getParameter("success") != null) { %>
+        <div class="alert alert-success">
+            <strong>Success!</strong> Admin user registered successfully.
+        </div>
+        <% } %>
+
+        <% if (request.getAttribute("error") != null) { %>
+        <div class="alert alert-error">
+            <strong>Error:</strong> <%= request.getAttribute("error") %>
+        </div>
+        <% } %>
 
         <form action="<%= request.getContextPath() %>/superadmin/registerAdmin" method="post">
             <div class="form-group">
@@ -114,7 +110,7 @@
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Choose a unique username" required>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required>
             </div>
 
             <div class="form-group">
@@ -123,8 +119,8 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Email Address (Optional)</label>
-                <input type="email" id="email" name="email" placeholder="e.g. admin@oceanview.com">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" placeholder="Number, Town, City" required>
             </div>
 
             <button type="submit" class="btn-submit">Register Admin</button>

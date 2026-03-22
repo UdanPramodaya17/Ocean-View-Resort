@@ -8,7 +8,7 @@
     <p style="color: #666; font-weight: bold;">Total Transactions: ${payments.size()}</p>
 
     <table style="width: 100%; border-collapse: collapse; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background: #fff;">
-        <thead style="background-color: #5a1212; color: white; text-align: left;">
+        <thead style="background-color: #1e3c72; color: white; text-align: left;">
         <tr>
             <th style="padding: 12px; border: 1px solid #ddd;">Payment ID</th>
             <th style="padding: 12px; border: 1px solid #ddd;">Reservation No</th>

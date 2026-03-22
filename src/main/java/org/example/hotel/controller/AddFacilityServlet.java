@@ -1,5 +1,7 @@
-package org.example.hotel.controller;//package org.example.hotel.controller;
+//package org.example.hotel.controller;
 //
+//
+//import jakarta.servlet.ServletException;
 //import jakarta.servlet.annotation.WebServlet;
 //import jakarta.servlet.http.HttpServlet;
 //import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +13,21 @@ package org.example.hotel.controller;//package org.example.hotel.controller;
 //
 //@WebServlet("/admin/addFacility")
 //public class AddFacilityServlet extends HttpServlet {
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//
+//    // ✅ THIS IS MISSING
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//
+//        request.getRequestDispatcher("/WEB-INF/admin/addFacility.jsp")
+//                .forward(request, response);
+//    }
+//
+//    // POST (already correct)
+//    @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//            throws IOException {
+//
 //        String name = request.getParameter("facilityName");
 //        String desc = request.getParameter("facilityDesc");
 //
@@ -20,14 +36,17 @@ package org.example.hotel.controller;//package org.example.hotel.controller;
 //        f.setDescription(desc);
 //
 //        AdminDAO dao = new AdminDAO();
-//        if(dao.addFacility(f)) {
-//            response.sendRedirect("facility-list.jsp");
+//
+//        if (dao.addFacility(f)) {
+//            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
 //        } else {
 //            response.getWriter().println("Error adding facility");
 //        }
 //    }
 //}
 
+
+package org.example.hotel.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -42,7 +61,6 @@ import java.io.IOException;
 @WebServlet("/admin/addFacility")
 public class AddFacilityServlet extends HttpServlet {
 
-    // ✅ THIS IS MISSING
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,10 +69,10 @@ public class AddFacilityServlet extends HttpServlet {
                 .forward(request, response);
     }
 
-    // POST (already correct)
+    // Note: Added ServletException here to allow for request forwarding on error
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws ServletException, IOException {
 
         String name = request.getParameter("facilityName");
         String desc = request.getParameter("facilityDesc");
@@ -66,9 +84,12 @@ public class AddFacilityServlet extends HttpServlet {
         AdminDAO dao = new AdminDAO();
 
         if (dao.addFacility(f)) {
-            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            // Optional: Added ?success=1 so your dashboard can show a success message
+            response.sendRedirect(request.getContextPath() + "/admin/dashboard?success=1");
         } else {
-            response.getWriter().println("Error adding facility");
+            // ✅ PROPER ERROR HANDLING ADDED HERE
+            request.setAttribute("error", "Error adding facility. Please try again.");
+            request.getRequestDispatcher("/WEB-INF/admin/addFacility.jsp").forward(request, response);
         }
     }
 }

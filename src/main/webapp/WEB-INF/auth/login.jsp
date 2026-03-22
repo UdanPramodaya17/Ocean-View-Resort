@@ -168,15 +168,58 @@
             font-size: 14px;
             text-align: center;
         }
+
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #1e3c72;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-home:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+
+        /* Optional: Fixed top-left Home Button */
+        .home-icon-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 </head>
 <body>
+
+<a href="${pageContext.request.contextPath}/index.jsp" class="home-icon-link">
+    <span>&larr;</span> Back to Website
+</a>
 
 <div class="login-wrapper">
     <div class="login-header">
         <h2>Staff Portal</h2>
         <p>Enter your credentials to manage the hotel</p>
     </div>
+
+    <%-- Success/Logout Message --%>
+    <%
+        String message = request.getParameter("message");
+        if ("LoggedOut".equals(message)) {
+    %>
+    <div style="color: #155724; background-color: #d4edda; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; font-size: 14px;">
+        You have been successfully logged out.
+    </div>
+    <% } %>
 
     <form action="${pageContext.request.contextPath}/login" method="post">
         <div class="form-group">
@@ -198,15 +241,9 @@
         </div>
     </c:if>
 
-    <%-- Check for the logout message in the URL --%>
-    <%
-        String message = request.getParameter("message");
-        if ("LoggedOut".equals(message)) {
-    %>
-    <div style="color: #155724; background-color: #d4edda; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
-        You have been successfully logged out.
-    </div>
-    <% } %>
+    <a href="${pageContext.request.contextPath}/index.jsp" class="back-home">
+        Not Staff? Return to Home Page
+    </a>
 </div>
 
 </body>

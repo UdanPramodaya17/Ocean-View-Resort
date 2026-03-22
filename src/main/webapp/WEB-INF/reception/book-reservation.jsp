@@ -135,15 +135,29 @@
             </div>
         </div>
 
-        <div style="margin-top: 30px; display: flex; align-items: center; gap: 20px;">
-            <button type="submit" style="background-color: #5a1212; color: white; border: none; padding: 12px 30px; cursor: pointer; font-size: 16px;">Booking room</button>
+        <div style="margin-top: 30px; display: flex; align-items: center; gap: 15px;">
+            <button type="submit" style="background-color: #1e3c72; color: white; border: none; padding: 12px 30px; cursor: pointer; font-size: 16px; border-radius: 4px;">
+                Confirm Booking
+            </button>
 
-            <div style="padding: 10px 20px; border: 1px solid #ccc; background: #fff; color: #555;">
+            <a href="${pageContext.request.contextPath}/reception/dashboard"
+               style="text-decoration: none; background-color: #6c757d; color: white; padding: 12px 20px; border-radius: 4px; font-size: 15px; font-weight: bold; text-align: center;">
+                Back to Dashboard
+            </a>
+
+            <div style="padding: 10px 20px; border: 1px solid #ccc; background: #fff; color: #555; border-radius: 4px; margin-left: auto;">
                 Room Type: <strong>${param.roomType != null ? param.roomType : 'Please select a room'}</strong>
             </div>
         </div>
 
     </form>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkIn').setAttribute('min', today);
+        document.getElementById('checkOut').setAttribute('min', today);
+    });
+</script>
 
 <%@ include file="../common/footer.jsp" %>

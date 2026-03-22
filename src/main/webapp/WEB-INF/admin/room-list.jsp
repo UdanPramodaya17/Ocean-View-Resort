@@ -1,5 +1,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.example.hotel.model.Room" %>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-family: sans-serif;">
+    <h2 style="color: #333; margin: 0;">Room Management</h2>
+
+    <a href="<%= request.getContextPath() %>/admin/dashboard"
+       style="text-decoration: none; background-color: #6c757d; color: white; padding: 10px 20px; border-radius: 4px; font-size: 14px; font-weight: bold; transition: background 0.3s;">
+        ← Back to Dashboard
+    </a>
+</div>
 
 <table border="1" style="width:100%; border-collapse: collapse; text-align: left; font-family: sans-serif;">
     <thead style="background-color:  #1E3C72FF; color: white;">
@@ -45,7 +53,7 @@
                 </span>
         </td>
         <td>
-            <a href="editRoom?id=<%= room.getRoomId() %>" style="color: blue;">Edit</a> |
+          |
             <a href="deleteRoom?id=<%= room.getRoomId() %>" style="color: red;" onclick="return confirm('Delete this room?')">Delete</a>
         </td>
     </tr>

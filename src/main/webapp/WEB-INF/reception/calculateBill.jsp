@@ -219,11 +219,41 @@
             width: 100%;
             margin-top: 10px;
         }
+
+        .btn-secondary {
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
     }
 </style>
 
 <div class="billing-container">
-    <h2 class="page-title">Billing & Checkout</h2>
+    <div class="header-actions">
+        <h2 class="page-title" style="margin: 0;">Billing & Checkout</h2>
+
+        <a href="${pageContext.request.contextPath}/reception/dashboard" class="btn-secondary">
+            <span>&larr;</span> Dashboard
+        </a>
+    </div>
 
     <c:if test="${not empty error}">
         <div class="error-message">
@@ -268,7 +298,7 @@
             </div>
 
             <div class="bill-total">
-                $${bill.totalAmount}
+                රු ${bill.totalAmount}
             </div>
 
             <form action="${pageContext.request.contextPath}/reception/payment" method="get">

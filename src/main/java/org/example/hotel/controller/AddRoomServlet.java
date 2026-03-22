@@ -251,6 +251,11 @@ public class AddRoomServlet extends HttpServlet {
 
             if (filePart != null && filePart.getSize() > 0) {
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+// Remove double extensions like .jpg.jpg
+                if (fileName.toLowerCase().endsWith(".jpg.jpg")) {
+                    fileName = fileName.replace(".jpg.jpg", ".jpg");
+                }
                 String uploadPath = getServletContext().getRealPath("/uploads");
 
                 File uploadDir = new File(uploadPath);

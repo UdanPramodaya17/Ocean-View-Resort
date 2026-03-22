@@ -3,7 +3,6 @@ package org.example.hotel.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.example.hotel.model.User;
 import org.example.hotel.service.UserService;
 
 import java.io.IOException;
@@ -14,31 +13,28 @@ public class SuperAdminRegisterAdminServlet extends HttpServlet {
     private UserService userService = new UserService();
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.getRequestDispatcher("/WEB-INF/superadmin/registerAdmin.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/superadmin/registerAdmin.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String fullName = request.getParameter("fullName");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String address = request.getParameter("address");
 
-        boolean success = userService.registerAdminUser(username, password);
+        boolean success = userService.registerAdminUser(fullName, username, password, address);
 
         if (success) {
-            response.sendRedirect(request.getContextPath()
-                    + "/superadmin/register-admin?success=1");
+            // Fixed redirect URL to match the servlet mapping
+            response.sendRedirect(request.getContextPath() + "/superadmin/registerAdmin?success=1");
         } else {
-            request.setAttribute("error", "Username already exists!");
-            request.getRequestDispatcher("/WEB-INF/superadmin/registerAdmin.jsp")
-                    .forward(request, response);
+            request.setAttribute("error", "Username already exists or registration failed!");
+            request.getRequestDispatcher("/WEB-INF/superadmin/registerAdmin.jsp").forward(request, response);
         }
     }
 }

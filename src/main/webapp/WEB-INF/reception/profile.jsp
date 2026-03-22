@@ -22,7 +22,6 @@
 <%--<%@ include file="../common/footer.jsp" %>--%>
 
 
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../common/header.jsp" %>
@@ -96,6 +95,7 @@
         color: #2c3e50;
         font-size: 1.05rem;
         font-weight: 600;
+        text-align: right;
     }
     .badge {
         padding: 6px 14px;
@@ -109,9 +109,6 @@
     }
     .badge-role {
         background-color: #3498db; /* Professional Blue */
-    }
-    .badge-status {
-        background-color: #2ecc71; /* Active Green */
     }
     .action-buttons {
         display: flex;
@@ -154,8 +151,37 @@
 
         <div class="profile-avatar">👤</div>
 
-        <div class="profile-title">${sessionScope.user.username}</div>
+        <%-- Use Full Name if available, otherwise fallback to Username --%>
+        <div class="profile-title">
+            <c:choose>
+                <c:when test="${not empty sessionScope.user.fullName}">
+                    ${sessionScope.user.fullName}
+                </c:when>
+                <c:otherwise>
+                    ${sessionScope.user.username}
+                </c:otherwise>
+            </c:choose>
+        </div>
         <div class="profile-subtitle">Reception Dashboard Access</div>
+
+        <div class="info-group">
+            <span class="info-label">Username</span>
+            <span class="info-value">${sessionScope.user.username}</span>
+        </div>
+
+        <div class="info-group">
+            <span class="info-label">Address</span>
+            <span class="info-value">
+                <c:choose>
+                    <c:when test="${not empty sessionScope.user.address}">
+                        ${sessionScope.user.address}
+                    </c:when>
+                    <c:otherwise>
+                        <span style="color: #95a5a6; font-size: 0.9rem; font-style: italic;">Not provided</span>
+                    </c:otherwise>
+                </c:choose>
+            </span>
+        </div>
 
         <div class="info-group">
             <span class="info-label">Staff Role</span>
@@ -167,7 +193,7 @@
         <div class="info-group">
             <span class="info-label">Account Status</span>
             <span class="info-value">
-                <span class="badge" style="background-color: ${sessionScope.user.status == 'Active' ? '#2ecc71' : '#e74c3c'};">
+                <span class="badge" style="background-color: ${sessionScope.user.status == 'ACTIVE' ? '#2ecc71' : '#e74c3c'};">
                     ${sessionScope.user.status}
                 </span>
             </span>

@@ -37,11 +37,11 @@ public class PDFGenerator {
             Font boldText = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
 
             // --- Header Section ---
-            Paragraph hotelName = new Paragraph("THE ROYAL HOTEL", titleFont);
+            Paragraph hotelName = new Paragraph("OCEAN VIEW RESORT", titleFont);
             hotelName.setAlignment(Element.ALIGN_RIGHT);
             document.add(hotelName);
 
-            Paragraph address = new Paragraph("123 Luxury Lane, Colombo, Sri Lanka\nContact: +94 112 345 678", textFont);
+            Paragraph address = new Paragraph("123 Luxury Lane, Galle, Sri Lanka\nContact: +94 112 345 678", textFont);
             address.setAlignment(Element.ALIGN_RIGHT);
             document.add(address);
 

@@ -98,9 +98,19 @@
             </div>
         </div>
 
-        <div style="margin-top: 20px;">
-            <button type="submit" style="background-color:  #1E3C72FF; color: white; border: none; padding: 10px 20px; cursor: pointer;">Save Room</button>
-            <button type="reset" style="background-color:  #1E3C72FF; color: white; border: none; padding: 10px 20px; cursor: pointer;">Reset Form</button>
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <a href="<%= request.getContextPath() %>/admin/dashboard"
+               style="text-decoration: none; background-color: #6c757d; color: white; border: none; padding: 10px 20px; cursor: pointer; display: inline-block; font-family: sans-serif; font-size: 13.33px;">
+                Back to Dashboard
+            </a>
+
+            <button type="submit" style="background-color: #1E3C72FF; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+                Save Room
+            </button>
+
+            <button type="reset" style="background-color: #1E3C72FF; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+                Reset Form
+            </button>
         </div>
     </form>
 </div>

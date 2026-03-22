@@ -156,6 +156,13 @@
             </a>
         </li>
         --%>
+        <%-- ✅ ADDED THE MESSAGES LINK HERE ✅ --%>
+        <li class="dashboard-card">
+            <a href="${pageContext.request.contextPath}/reception/messages">
+                <span class="card-icon">✉️</span>
+                View Messages
+            </a>
+        </li>
 
         <li class="dashboard-card">
             <%-- Change from account.jsp to /reception/profile --%>

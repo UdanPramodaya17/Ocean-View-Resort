@@ -308,6 +308,13 @@
                 Room List
             </a>
         </div>
+        <div class="action-card">
+            <a href="<%= request.getContextPath() %>/admin/messages" class="action-link">
+                <span class="action-icon">✉️</span>
+                View Messages
+            </a>
+        </div>
+
     </div>
 </div>
 
