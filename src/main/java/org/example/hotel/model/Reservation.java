@@ -1,0 +1,116 @@
+package org.example.hotel.model;
+
+
+
+import java.time.LocalDate;
+
+public class Reservation {
+
+    private int reservationId;
+    private int guestId;
+    private int roomId;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
+    private double totalAmount;
+    private String status;
+    private String roomType;
+
+    private String reservationNumber;
+    private String guestName;
+
+    private String paymentStatus;
+
+    public String getReservationNumber() {
+        return reservationNumber;
+    }
+
+    public void setReservationNumber(String reservationNumber) {
+        this.reservationNumber = reservationNumber;
+    }
+
+    public Reservation() {}
+
+    public Reservation(int reservationId, int guestId, int roomId,
+                       LocalDate checkIn, LocalDate checkOut,
+                       double totalAmount) {
+        this.reservationId = reservationId;
+        this.guestId = guestId;
+        this.roomId = roomId;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.totalAmount = totalAmount;
+
+    }
+
+    // Getters
+    public int getReservationId() {
+        return reservationId;
+    }
+
+    public int getGuestId() {
+        return guestId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public String getStatus() { return status; }
+
+    public String getGuestName() { return guestName; }
+
+   public  String getRoomType() {return roomType ; }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+
+    // Setters
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public void setStatus(String status) { this.status = status; }
+
+    public void setGuestName(String guestName) { this.guestName = guestName; }
+
+    public void  setRoomType( String roomType) {this.roomType = roomType ; }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+}
